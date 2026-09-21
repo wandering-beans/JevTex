@@ -10,7 +10,7 @@ const overlay = {children:[], replaceChildren(){this.children=[];}, append(n){th
 let scale = 1;
 const result = (verdict, y, status='ok', page=1) => ({verdict,status,before:'e1',after:'e2',locations:[{page,rect:[10,y,150,y+20]}]});
 const context = vm.createContext({
-  $:()=>toggle, labels:{incorrect:'誤り',uncertain:'判断保留'},
+  $:()=>toggle, t:key=>({incorrect:'誤り',uncertain:'判断保留'}[key]),
   el:(_tag,_text,className)=>({className,style:{}}),
   views:new Map([[1,{overlay,page:1,viewport:{convertToViewportPoint:(x,y)=>[x*scale,(800-y)*scale]}}]]),
   doc:{results:[result('uncertain',10),result('incorrect',10),result('uncertain',40),

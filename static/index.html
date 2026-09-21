@@ -7,31 +7,31 @@
   <script type="module" src="/static/app.js"></script>
 </head>
 <body>
-  <header><h1 class="brand">JevTex</h1><span id="connection" class="pill">接続を確認中</span></header>
+  <header><h1 class="brand">JevTex</h1><div class="header-controls"><span id="connection" class="pill" data-i18n="connecting"></span><label for="language" class="sr-only" data-i18n="language"></label><select id="language"></select></div></header>
   <main>
-    <section class="upload" aria-label="文書の読み込み"><label class="primary file-button" for="file">TeXファイルを開く</label><input id="file" type="file" accept=".tex" class="sr-only"><div class="samples"><span>サンプル</span><button id="correct">correct</button><button id="mistake">mistake</button></div></section>
-    <p id="notice" role="status" aria-live="polite">UTF-8のTeXファイルを選択してください（1MB以下）。判定時に選択した式と文脈をTypeSafeへ送信します。</p>
+    <section class="upload" data-i18n-aria-label="upload"><label class="primary file-button" for="file" data-i18n="openFile"></label><input id="file" type="file" accept=".tex" class="sr-only"><div class="samples"><span data-i18n="samples"></span><button id="correct">correct</button><button id="mistake">mistake</button></div></section>
+    <p id="notice" role="status" aria-live="polite" data-i18n="initial"></p>
     <div id="warnings" role="alert"></div>
     <div class="workspace">
       <section class="panel review-panel" aria-labelledby="review-title">
-        <div class="panel-heading"><h2 id="review-title">比較ペア</h2><span id="count">未読込</span></div>
-        <div id="empty-review" class="empty"><p>未読込</p></div>
+        <div class="panel-heading"><h2 id="review-title" data-i18n="pairs"></h2><span id="count" data-i18n="unloaded"></span></div>
+        <div id="empty-review" class="empty"><p data-i18n="unloaded"></p></div>
         <div id="review" hidden>
-          <label class="field-label" for="assumptions">共通の前提条件</label><textarea id="assumptions" rows="3" placeholder="例：r > 0、fはC²級。必要な前提を確認・追記してください。"></textarea>
-          <p class="hint">候補には別々の定義も含まれます。同じ量を変形するペアだけ残してください。参照式はペアごとに選べます。</p>
+          <label class="field-label" for="assumptions" data-i18n="assumptions"></label><textarea id="assumptions" rows="3" data-i18n-placeholder="assumptionsPlaceholder"></textarea>
+          <p class="hint" data-i18n="pairHint"></p>
           <div id="pairs"></div>
-          <button id="add-pair" class="secondary">＋ 比較ペアを追加</button>
-          <div class="run"><button id="check" class="primary">Jevで判定する</button><p id="key-help" class="hint"></p></div>
+          <button id="add-pair" class="secondary" data-i18n="addPair"></button>
+          <div class="run"><button id="check" class="primary" data-i18n="check"></button><p id="key-help" class="hint"></p></div>
         </div>
       </section>
       <section class="panel pdf-panel" aria-labelledby="pdf-title">
-        <div class="panel-heading"><h2 id="pdf-title">PDFプレビュー</h2><div class="toolbar"><label><input type="checkbox" id="show-highlights" checked>ハイライト</label><label for="zoom" class="sr-only">PDF倍率</label><select id="zoom"><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></div></div>
-        <div class="pdf-caption"><span id="document-name">未読込</span><span id="summary"></span></div>
-        <div id="pdf-pages"><div class="empty"><p>未読込</p></div></div>
-        <div id="downloads" hidden><a id="download-pdf" class="secondary" download>注釈付きPDFを保存</a><a id="download-json" download>判定JSON</a></div>
+        <div class="panel-heading"><h2 id="pdf-title" data-i18n="pdfPreview"></h2><div class="toolbar"><label><input type="checkbox" id="show-highlights" checked><span data-i18n="highlights"></span></label><label for="zoom" class="sr-only" data-i18n="zoom"></label><select id="zoom"><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></div></div>
+        <div class="pdf-caption"><span id="document-name" data-i18n="unloaded"></span><span id="summary"></span></div>
+        <div id="pdf-pages"><div class="empty"><p data-i18n="unloaded"></p></div></div>
+        <div id="downloads" hidden><a id="download-pdf" class="secondary" download data-i18n="downloadPdf"></a><a id="download-json" download data-i18n="downloadJson"></a></div>
       </section>
     </div>
-    <footer>赤：誤り ／ 黄：判断保留。Jevの判定は数学的証明ではありません。<span id="model"></span></footer>
+    <footer><span data-i18n="footer"></span><span id="model"></span></footer>
   </main>
 </body>
 </html>

@@ -2,3 +2,5 @@
 @media(min-width:951px){.pdf-panel{position:sticky;top:20px}}label.file-button:has(+input:focus-visible){outline:3px solid #8fcdb6;outline-offset:3px}
 
 .highlight.uncertain{background:rgba(255,255,0,.22);outline:1px solid rgba(170,145,0,.55)}
+
+.header-controls{display:flex;align-items:center;gap:12px}header{gap:12px}.toolbar{flex-wrap:wrap;justify-content:flex-end}@media(max-width:600px){.header-controls{gap:6px}.pill{font-size:10px;padding:6px 8px}.result{flex-wrap:wrap}}
