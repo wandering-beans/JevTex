@@ -45,7 +45,7 @@ async function api(path, data) {
 }
 function setBusy(value) {
   busy = value;
-  for (const control of document.querySelectorAll('#review button, #review select, #review input, #review textarea, .upload button, #file')) control.disabled = value || control.dataset.unavailable === 'true';
+  for (const control of document.querySelectorAll('#review button, #review select, #review input, #review textarea, #file')) control.disabled = value || control.dataset.unavailable === 'true';
   $('check').disabled = value || !status?.api_key_configured || !doc?.pairs.length;
 }
 function invalidate() {
@@ -215,9 +215,6 @@ $('file').onchange = async event => {
   try { await loadDocument({name:file.name,source:new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer())}); }
   catch { notice('utf8'); }
   event.target.value = '';
-};
-for (const variant of ['correct','mistake']) $(variant).onclick = async () => {
-  try { await loadDocument(await api('/api/samples/'+variant)); } catch(error) { showError(error); }
 };
 $('add-pair').onclick = () => {
   if (doc.equations.length < 2) return;
