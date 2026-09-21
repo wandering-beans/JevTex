@@ -48,6 +48,10 @@ Jevの`Choice`は `correct / incorrect / uncertain` の3択です。選択確率
 | `examples/laplacian_correct.tex` | 日本語の説明付き2次元極座標ラプラシアン。12式、6比較ペア、2ページ。 |
 | `examples/laplacian_mistake.tex` | e10→e11で `f_r/r` を脱落。e11→e12は欠落を引き継ぐが、くくり出しは正しい。 |
 | `examples/expected.json` | ペアごとの期待判定・説明と共通の前提。評価スクリプト専用でJevへ送信しない。 |
+| `examples/matrix_calculus_mistake.tex` | 高難度：行列指数・二重交換子・対数行列式の二次変分。11式、8比較ペア、新しい誤り3か所。ファイル選択から読み込む。 |
+| `examples/matrix_calculus_answers.md` / `matrix_calculus_expected.json` | 高難度サンプルの誤りの位置・正しい式・厳密な反例と期待判定。解答はJevへ送信しない。 |
+
+高難度サンプルの正解は `tests/test_matrix_sample.py` で独立したSymPy計算により確認する。実Jevによる判定は未実施。下記のPDF作成・実API評価スクリプトは従来のラプラシアン2文書を対象とする。
 
 ```sh
 # 模擬API、抽出、独立したSymPy計算、境界条件

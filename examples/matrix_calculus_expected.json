@@ -1,0 +1,15 @@
+{
+  "assumptions": "A, B, X, H, K are real d by d matrices, d >= 2; no commutativity is assumed. [P,Q] = PQ - QP. DF_X[H] = d/dt F(X+tH) at t=0. Matrix exponential series may be differentiated term by term. C(t)=exp(tA) B exp(-tA) is analytic. Only in the log-determinant section, X is symmetric positive definite, H and K are fixed symmetric directions, Phi(X)=log(det(X)), and D^2 Phi_X[H,K] means d/dt D Phi_(X+tK)[H] at t=0. Evaluate each local transformation, distinguishing a new error from inherited errors.",
+  "variants": {
+    "mistake": [
+      {"before":"e1","after":"e2","context_ids":[],"expected":"correct","explanation":"行列積の微分則。Hを挿入する全位置の和をとる。"},
+      {"before":"e2","after":"e3","context_ids":[],"expected":"incorrect","explanation":"新しい誤り。可換性を仮定せず、すべてのHを右端へ移動している。"},
+      {"before":"e3","after":"e4","context_ids":[],"expected":"correct","explanation":"級数の添字変更と再総和は正しい。先行する非可換性の誤りを継承する。"},
+      {"before":"e5","after":"e6","context_ids":[],"expected":"incorrect","explanation":"新しい誤り。二重交換子の最後は+BA²であり、-BA²ではない。"},
+      {"before":"e6","after":"e7","context_ids":[],"expected":"correct","explanation":"解析関数のテイラー係数から二階微分を読む操作は正しい。符号の誤りを継承する。"},
+      {"before":"e8","after":"e9","context_ids":[],"expected":"correct","explanation":"方向Kへの逆行列の微分とトレースの線形性を適用する。"},
+      {"before":"e9","after":"e10","context_ids":[],"expected":"incorrect","explanation":"新しい誤り。トレースの巡回性は因子の任意の交換を許さず、二つのXの逆行列を隣接させられない。"},
+      {"before":"e10","after":"e11","context_ids":[],"expected":"correct","explanation":"K=Hの代入自体は正しい。先行する因子の順序の誤りを継承する。"}
+    ]
+  }
+}

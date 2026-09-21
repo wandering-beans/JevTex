@@ -1,0 +1,86 @@
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=23mm]{geometry}
+\title{非可換行列の微分と二次変分}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+$A,B,X,H,K$ は $d\times d$ 実行列（$d\geq2$）、$I$ は単位行列とする。
+行列間の可換性は仮定しない。交換子を $[P,Q]=PQ-QP$ と定義する。
+写像 $F$ の方向 $H$ に沿う微分を
+$DF_X[H]=\left.\frac{d}{dt}F(X+tH)\right|_{t=0}$ と書く。
+以下の各節は独立した計算である。
+
+\section*{行列指数関数のフレシェ微分}
+行列指数関数のべき級数は有限次元で局所一様に収束し、項別微分できる。
+\begin{equation}
+ D(\exp)_X[H]=\sum_{n=1}^{\infty}\frac{1}{n!}
+ \left.\frac{d}{dt}(X+tH)^n\right|_{t=0}.
+ \label{exp-series}
+\end{equation}
+行列積に積の微分則を適用する。
+\begin{equation}
+ D(\exp)_X[H]=\sum_{n=1}^{\infty}\frac{1}{n!}
+ \sum_{k=0}^{n-1}X^k H X^{n-1-k}.
+ \label{exp-product}
+\end{equation}
+各次数に属する項をまとめて整理する。
+\begin{equation}
+ D(\exp)_X[H]=\sum_{n=1}^{\infty}\frac{X^{n-1}H}{(n-1)!}.
+ \label{exp-collected}
+\end{equation}
+$m=n-1$ と置き、指数関数の級数表示を用いる。
+\begin{equation}
+ D(\exp)_X[H]=\mathrm{e}^X H.
+ \label{exp-closed}
+\end{equation}
+
+\section*{共役作用と二重交換子}
+$C(t)=\mathrm{e}^{tA}B\mathrm{e}^{-tA}$ は $t$ の解析関数である。
+原点のまわりのテイラー展開を行う。
+\begin{equation}
+ C(t)=B+t[A,B]+\frac{t^2}{2}[A,[A,B]]+O(t^3).
+ \label{adj-series}
+\end{equation}
+交換子の定義 $[P,Q]=PQ-QP$ を使い、積の形に展開する。
+\begin{equation}
+ C(t)=B+t(AB-BA)+\frac{t^2}{2}(A^2B-2ABA-BA^2)+O(t^3).
+ \label{adj-products}
+\end{equation}
+解析関数 $C(t)$ のテイラー係数から二階微分を読み取る。
+\begin{equation}
+ C''(0)=A^2B-2ABA-BA^2.
+ \label{adj-second}
+\end{equation}
+
+\newpage
+\section*{対数行列式の二次変分}
+この節では $X$ を実対称正定値行列、$H,K$ を実対称行列とする。
+十分小さい実数 $t$ に対して $X+tK$ は正定値である。
+$\Phi(X)=\log\det X$ とおき、二次微分を
+$D^2\Phi_X[H,K]=\left.\frac{d}{dt}D\Phi_{X+tK}[H]\right|_{t=0}$
+と定義する。方向 $H,K$ は $X$ に依存しない。
+
+行列式の微分公式とスカラーの連鎖律から、一階微分は次の形になる。
+\begin{equation}
+ D\Phi_X[H]=\operatorname{tr}(X^{-1}H).
+ \label{logdet-first}
+\end{equation}
+逆行列の微分公式
+$D(X\mapsto X^{-1})_X[K]=-X^{-1}KX^{-1}$ を用い、方向 $K$ に微分する。
+\begin{equation}
+ D^2\Phi_X[H,K]=-\operatorname{tr}(X^{-1}KX^{-1}H).
+ \label{logdet-second}
+\end{equation}
+トレース内の因子を整理して次の形にする。
+\begin{equation}
+ D^2\Phi_X[H,K]=-\operatorname{tr}(X^{-2}KH).
+ \label{logdet-collected}
+\end{equation}
+二つの方向を一致させ、$K=H$ を代入する。
+\begin{equation}
+ D^2\Phi_X[H,H]=-\operatorname{tr}(X^{-2}H^2).
+ \label{logdet-directional}
+\end{equation}
+\end{document}
