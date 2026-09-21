@@ -1,0 +1,6 @@
+{
+  "name": "jevtex-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": { "pdfjs-dist": "6.3.289" }
+}

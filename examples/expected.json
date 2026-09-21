@@ -1,0 +1,93 @@
+{
+  "assumptions": "r > 0. f(r, theta) is C^2 on a smooth local polar coordinate chart. Subscripts denote partial derivatives, and mixed partials commute. x = r cos(theta), y = r sin(theta).",
+  "variants": {
+    "correct": [
+      {
+        "before": "e2",
+        "after": "e3",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "一階微分の連鎖律に座標微分を代入する。"
+      },
+      {
+        "before": "e4",
+        "after": "e5",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "y方向について同じ連鎖律を適用する。"
+      },
+      {
+        "before": "e6",
+        "after": "e7",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "係数も微分し、混合偏微分をまとめる。"
+      },
+      {
+        "before": "e8",
+        "after": "e9",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "y方向の積の微分を展開する。"
+      },
+      {
+        "before": "e10",
+        "after": "e11",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "三角関数の恒等式で各係数を整理する。"
+      },
+      {
+        "before": "e11",
+        "after": "e12",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "1/r²をくくり出す。"
+      }
+    ],
+    "mistake": [
+      {
+        "before": "e2",
+        "after": "e3",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "一階微分の連鎖律に座標微分を代入する。"
+      },
+      {
+        "before": "e4",
+        "after": "e5",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "y方向について同じ連鎖律を適用する。"
+      },
+      {
+        "before": "e6",
+        "after": "e7",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "係数も微分し、混合偏微分をまとめる。"
+      },
+      {
+        "before": "e8",
+        "after": "e9",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "y方向の積の微分を展開する。"
+      },
+      {
+        "before": "e10",
+        "after": "e11",
+        "context_ids": [],
+        "expected": "incorrect",
+        "explanation": "f_r/rを脱落させた新しい誤り。"
+      },
+      {
+        "before": "e11",
+        "after": "e12",
+        "context_ids": [],
+        "expected": "correct",
+        "explanation": "式1からのくくり出し自体は正しい。前段の欠落を引き継ぐが、この段階に新しい誤りはない。"
+      }
+    ]
+  }
+}

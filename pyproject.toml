@@ -1,0 +1,17 @@
+[project]
+name = "jevtex"
+version = "0.1.0"
+description = "Local TeX transformation review with Jev and PDF overlays"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.34,<1",
+  "pylatexenc==2.10",
+  "pypdf>=6.0,<7",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28,<1", "sympy>=1.13,<2"]
+
+[tool.uv]
+package = false

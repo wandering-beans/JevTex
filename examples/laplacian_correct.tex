@@ -1,0 +1,77 @@
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{amsmath}
+\usepackage[margin=23mm]{geometry}
+\title{二次元極座標におけるラプラシアンの導出}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\section*{座標と前提}
+$r>0$ とし、角度 $\theta$ の滑らかな局所座標をとる。
+$f=f(r,\theta)$ は $C^2$ 級とし、$f_r,f_{r\theta}$ などは偏微分を表す。
+混合偏微分は交換できる。座標の定義は次のとおりである。
+\begin{equation}
+ x=r\cos\theta,\qquad y=r\sin\theta. \label{coordinates}
+\end{equation}
+逆変換を微分すると $r_x=\cos\theta$、$r_y=\sin\theta$、
+$\theta_x=-\sin\theta/r$、$\theta_y=\cos\theta/r$ を得る。
+\section*{一階微分：x方向}
+連鎖律に $r_x=\cos\theta$、$\theta_x=-\sin\theta/r$ を代入する。
+\begin{align}
+ f_x &= f_r r_x+f_\theta\theta_x \label{dx-chain}\\
+     &= \cos\theta f_r-\frac{\sin\theta}{r}f_\theta. \label{dx-result}
+\end{align}
+\section*{一階微分：y方向}
+連鎖律に $r_y=\sin\theta$、$\theta_y=\cos\theta/r$ を代入する。
+\begin{align}
+ f_y &= f_r r_y+f_\theta\theta_y \label{dy-chain}\\
+     &= \sin\theta f_r+\frac{\cos\theta}{r}f_\theta. \label{dy-result}
+\end{align}
+\section*{二階微分：x方向}
+$\partial_x=\cos\theta\,\partial_r-(\sin\theta/r)\partial_\theta$ をもう一度作用させる。
+係数も $r,\theta$ に依存するため、積の微分を適用する。
+\begin{equation}
+ f_{xx}=\left(\cos\theta\,\partial_r-\frac{\sin\theta}{r}\partial_\theta\right)
+ \left(\cos\theta f_r-\frac{\sin\theta}{r}f_\theta\right). \label{dxx-operator}
+\end{equation}
+\begin{equation}
+ \begin{aligned}
+ f_{xx}={}&\cos^2\theta f_{rr}-\frac{2\sin\theta\cos\theta}{r}f_{r\theta}
+              +\frac{\sin^2\theta}{r^2}f_{\theta\theta}\\
+          &+\frac{\sin^2\theta}{r}f_r+\frac{2\sin\theta\cos\theta}{r^2}f_\theta.
+ \end{aligned}\label{dxx-expanded}
+\end{equation}
+\newpage
+\section*{二階微分：y方向}
+$\partial_y=\sin\theta\,\partial_r+(\cos\theta/r)\partial_\theta$ をもう一度作用させる。
+\begin{equation}
+ f_{yy}=\left(\sin\theta\,\partial_r+\frac{\cos\theta}{r}\partial_\theta\right)
+ \left(\sin\theta f_r+\frac{\cos\theta}{r}f_\theta\right). \label{dyy-operator}
+\end{equation}
+\begin{equation}
+ \begin{aligned}
+ f_{yy}={}&\sin^2\theta f_{rr}+\frac{2\sin\theta\cos\theta}{r}f_{r\theta}
+              +\frac{\cos^2\theta}{r^2}f_{\theta\theta}\\
+          &+\frac{\cos^2\theta}{r}f_r-\frac{2\sin\theta\cos\theta}{r^2}f_\theta.
+ \end{aligned}\label{dyy-expanded}
+\end{equation}
+\section*{和の整理}
+ラプラシアンは $\nabla^2 f=f_{xx}+f_{yy}$ である。
+上の二つの式を足すと、$f_{r\theta}$ と $f_\theta$ の係数が相殺する。
+\begin{equation}
+ \begin{aligned}
+ \nabla^2 f={}&(\cos^2\theta+\sin^2\theta)f_{rr}\\
+ &+\frac{\sin^2\theta+\cos^2\theta}{r}f_r
+ +\frac{\sin^2\theta+\cos^2\theta}{r^2}f_{\theta\theta}.
+ \end{aligned}\label{lap-sum}
+\end{equation}
+$\sin^2\theta+\cos^2\theta=1$ を用いて整理する。
+\begin{equation}
+ \nabla^2 f=f_{rr}+\frac{1}{r}f_r+\frac{1}{r^2}f_{\theta\theta}. \label{lap-simplified}
+\end{equation}
+最後に、共通の係数 $1/r^2$ をくくり出す。
+\begin{equation}
+ \nabla^2 f=\frac{1}{r^2}\left(r^2 f_{rr}+r f_r+f_{\theta\theta}\right). \label{lap-factored}
+\end{equation}
+これは $r>0$ の領域での局所座標表示である。
+\end{document}
