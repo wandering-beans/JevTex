@@ -8,7 +8,7 @@ from unittest.mock import patch, Mock
 import urllib.error
 
 from fastapi.testclient import TestClient
-from pypdf import PdfReader
+from pypdf import PdfReader, PdfWriter
 import sympy as s
 
 from jevtex import app as web, judge
@@ -23,6 +23,30 @@ def answer(choice="correct", probabilities=None):
 
 
 class CoreTests(unittest.TestCase):
+    def test_annotation_colors_and_precedence(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source, output = Path(folder)/'source.pdf', Path(folder)/'annotated.pdf'
+            writer = PdfWriter()
+            writer.add_blank_page(width=600, height=800)
+            writer.write(source)
+            original = source.read_bytes()
+            def result(verdict, y, status='ok'):
+                return dict(before='e1', after='e2', verdict=verdict, status=status,
+                            locations=[dict(page=1, rect=[10,y,150,y+20])])
+            low_probability = judge.validate_answer(answer('incorrect', {'correct':.2,'incorrect':.7,'uncertain':.1}))
+            annotate(source, output, [result('uncertain',10), result('incorrect',10),
+                     result('uncertain',40), result('correct',70), result('uncertain',100,'error'),
+                     {**result('uncertain',130), 'locations':[]},
+                     {**result('uncertain',160), **low_probability}])
+            annotations = [a.get_object() for a in PdfReader(output).pages[0]['/Annots']]
+            self.assertEqual([a['/C'] for a in annotations], [[1,0,0],[1,1,0],[1,1,0]])
+            for a, verdict, rgb in zip(annotations, ['incorrect','uncertain','uncertain'],
+                                       [b'1 0 0 rg', b'1 1 0 rg', b'1 1 0 rg']):
+                self.assertIn(verdict, a['/Contents'])
+                self.assertIn(rgb, a['/AP']['/N'].get_object().get_data())
+                self.assertAlmostEqual(float(a['/CA']), .22)
+            self.assertEqual(source.read_bytes(), original)
+
     def test_extraction_nested_rows_comments_and_sections(self):
         source = r"""\documentclass{article}
 \begin{document}

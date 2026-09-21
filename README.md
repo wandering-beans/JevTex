@@ -1,6 +1,6 @@
 # JevTex
 
-TeXの「式1 → 式2」をJevで判定し、変形後の式をPDF上で赤く表示するローカルWebアプリ。
+TeXの「式1 → 式2」をJevで判定し、変形後の式をPDF上で誤りは赤、判断保留は黄色で表示するローカルWebアプリ。
 
 ## 起動
 
@@ -33,7 +33,9 @@ uv run python -m jevtex
 2. 自動候補の式1・式2を確認します。別々の定義は除外し、必要なら追加・変更します。
 3. 共通の前提条件と、各ペアの「参照式と送信する周辺説明」を確認します。
 4. 「Jevで判定する」を押すと、選択した式・定義・前提・周辺説明をTypeSafe公式APIへ送ります。
-5. 判定・確率を確認し、「PDFへ」で該当箇所に移動します。赤い表示を切り替え、別名の注釈付きPDFと結果JSONを保存できます。
+5. 判定・確率を確認し、「PDFへ」で該当箇所に移動します。ハイライトの表示を切り替え、別名の注釈付きPDFと結果JSONを保存できます。
+
+画面と保存PDFは、誤りを赤、判断保留（確率不足を含む）を黄色で表示します。同じ式に両方の判定がある場合は赤を優先します。通信失敗と位置未取得の式には色を付けません。
 
 入力ファイル名、文書タイトル、未選択の全文、正解データはAPIに送りません。数式自体や周辺説明に機密情報がある場合は送信対象になります。数式・前提の自動修正は行いません。
 
@@ -56,6 +58,7 @@ Jevの`Choice`は `correct / incorrect / uncertain` の3択です。選択確率
 ```sh
 # 模擬API、抽出、独立したSymPy計算、境界条件
 uv run python -m unittest discover -s tests -v
+node tests/test_highlights.mjs
 
 # 実TeXコンパイル、SyncTeX、PDF注釈とAPI全体も検証（Jev応答は模擬）
 JEVTEX_INTEGRATION=1 uv run python -m unittest discover -s tests -v

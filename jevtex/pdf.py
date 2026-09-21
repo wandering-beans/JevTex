@@ -127,9 +127,12 @@ def locate_equations(directory, equations):
 def annotate(source, destination, results):
     writer = PdfWriter(clone_from=source)
     seen = set()
-    for result in results:
-        if result.get("status") != "ok" or result.get("verdict") != "incorrect":
+    # Red wins when multiple pairs point to the same equation.
+    for result in sorted(results, key=lambda r: r.get("verdict") != "incorrect"):
+        verdict = result.get("verdict")
+        if result.get("status") != "ok" or verdict not in ("incorrect", "uncertain"):
             continue
+        color, rgb = ("ff0000", "1 0 0") if verdict == "incorrect" else ("ffff00", "1 1 0")
         for location in result.get("locations", []):
             rect, page = location["rect"], location["page"] - 1
             key = (page, tuple(rect))
@@ -138,14 +141,14 @@ def annotate(source, destination, results):
             seen.add(key)
             x0, y0, x1, y1 = rect
             annotation = Highlight(rect=rect, quad_points=ArrayObject([FloatObject(v) for v in
-                [x0, y1, x1, y1, x0, y0, x1, y0]]), highlight_color="ff0000")
+                [x0, y1, x1, y1, x0, y0, x1, y0]]), highlight_color=color)
             annotation[NameObject("/CA")] = FloatObject(0.22)
             annotation[NameObject("/F")] = NumberObject(4)
-            annotation[NameObject("/Contents")] = TextStringObject(f"{result.get('model', 'Jev')}: {result['before']} -> {result['after']} (incorrect)")
+            annotation[NameObject("/Contents")] = TextStringObject(f"{result.get('model', 'Jev')}: {result['before']} -> {result['after']} ({verdict})")
             # Explicit appearance ensures saved highlights render in PDF.js and desktop readers.
             appearance = DecodedStreamObject()
             w, h = x1 - x0, y1 - y0
-            appearance.set_data(f"q /GS gs 1 0 0 rg 0 0 {w} {h} re f Q".encode())
+            appearance.set_data(f"q /GS gs {rgb} rg 0 0 {w} {h} re f Q".encode())
             appearance.update({NameObject("/Type"): NameObject("/XObject"), NameObject("/Subtype"): NameObject("/Form"),
                 NameObject("/BBox"): ArrayObject([FloatObject(v) for v in [0, 0, w, h]]),
                 NameObject("/Resources"): DictionaryObject({NameObject("/ExtGState"): DictionaryObject({

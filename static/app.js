@@ -104,12 +104,14 @@ function paintHighlights() {
     overlay.replaceChildren();
     if (!$('show-highlights').checked || !doc) continue;
     const seen = new Set();
-    for (const result of doc.results.filter(r => r.status === 'ok' && r.verdict === 'incorrect')) {
+    // Match saved PDF precedence: red wins over yellow for the same equation.
+    for (const result of doc.results.filter(r => r.status === 'ok' && ['incorrect','uncertain'].includes(r.verdict))
+      .sort((a,b) => Number(a.verdict !== 'incorrect') - Number(b.verdict !== 'incorrect'))) {
       for (const loc of result.locations.filter(l => l.page === page)) {
         const key = loc.rect.join(','); if (seen.has(key)) continue; seen.add(key);
-        const r = viewportRect(viewport,loc.rect), box = el('div',undefined,'highlight');
+        const r = viewportRect(viewport,loc.rect), box = el('div',undefined,'highlight '+result.verdict);
         Object.assign(box.style,{left:Math.min(r[0],r[2])+'px', top:Math.min(r[1],r[3])+'px', width:Math.abs(r[2]-r[0])+'px', height:Math.abs(r[3]-r[1])+'px'});
-        box.title = `${result.before} → ${result.after}: 誤り`; overlay.append(box);
+        box.title = `${result.before} → ${result.after}: ${labels[result.verdict]}`; overlay.append(box);
       }
     }
   }
@@ -175,7 +177,7 @@ $('check').onclick = async () => {
     $('summary').textContent = Object.entries(counts).map(([k,v]) => `${k} ${v}`).join(' / ');
     $('download-pdf').href = `/api/documents/${doc.id}/pdf?annotated=true`; $('download-pdf').hidden = !doc.pdf_available;
     $('download-json').href = `/api/documents/${doc.id}/results`; $('downloads').hidden = false;
-    notice('判定完了。赤い箇所は「式1→式2」で新しい誤りがあるとJevが判定した式2です。');
+    notice('判定完了。変形後の式を、誤りは赤、判断保留は黄色で表示します。');
   } catch(error) { notice(error.message); }
   finally { setBusy(false); }
 };
